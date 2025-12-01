@@ -17,7 +17,7 @@ data class CloudState(
     private fun initCloud() {
         var startX = 150
 
-        (0 until maxClouds).forEach { i ->
+        (0 until maxClouds).forEach { _ ->
             val cloud = CloudModel(
                 xPos = startX,
                 yPos = rand(0, 100)

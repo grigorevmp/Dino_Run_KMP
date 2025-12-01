@@ -66,7 +66,7 @@ data class CactusModel(
     val angle: Float = 0f,
     var xPos: Int = 0,
     var yPos: Int = 0,
-    var path: Path = CactusPath()
+    var path: Path = if (rand(-1, 1) > 0) CactusPath(inv = false) else CactusPath(inv = true)
 ) {
 
     fun getBounds() : Rect
