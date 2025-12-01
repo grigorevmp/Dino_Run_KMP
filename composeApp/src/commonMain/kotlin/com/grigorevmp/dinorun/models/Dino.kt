@@ -46,7 +46,6 @@ data class DinoState(
 
         if (!isJumping)
         {
-            // Change keyframe only when dino is running and not jumping
             changeKeyframe()
         }
     }

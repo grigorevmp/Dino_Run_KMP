@@ -81,11 +81,9 @@ fun DinoGameScene(
     val highScore = gameState.highScore
     val isGameOver = gameState.isGameOver
 
-    // Настоящий игровой цикл
     LaunchedEffect(isGameOver) {
         if (!isGameOver) {
             while (true) {
-                // ~60 FPS
                 delay(16L)
 
                 gameState.increaseScore()
@@ -95,6 +93,7 @@ fun DinoGameScene(
                 dinoState.move()
 
                 var collision = false
+
                 for (cactus in cactusState.cactusList) {
                     val dinoBounds = dinoState.getBounds().deflate(DOUBT_FACTOR)
                     val cactusBounds = cactus.getBounds().deflate(DOUBT_FACTOR)
@@ -103,6 +102,7 @@ fun DinoGameScene(
                         break
                     }
                 }
+
                 if (collision) {
                     gameState.setGameOver()
                     break
@@ -157,7 +157,6 @@ fun DrawScope.DinoView(dinoState: DinoState, color: Color) {
             top = dinoState.yPos - dinoState.path.getBounds().height
         )
     }) {
-        // Можно логировать на всех платформах простым println
         println("Dino keyframe: ${dinoState.keyframe}")
 
         drawPath(
@@ -193,7 +192,6 @@ fun DrawScope.EarthView(
     deviceWidthInPixels: Int,
     color: Color
 ) {
-    // Ground Line
     drawLine(
         color = color,
         start = Offset(x = 0f, y = EARTH_Y_POSITION),
@@ -284,10 +282,6 @@ fun ShowBoundsSwitchView() {
     }
 }
 
-/**
- * KMP-совместимый вариант без R.drawable / painterResource.
- * Иконку можно передать извне через слот [replayIcon].
- */
 @Composable
 fun GameOverTextView(
     isGameOver: Boolean = true,
@@ -341,9 +335,5 @@ fun DrawScope.drawBoundingBox(color: Color, rect: Rect, name: String? = null) {
 }
 
 fun Rect.collided(other: Rect, doubtFactor: Float = 0f): Boolean {
-    if (right >= (other.left + doubtFactor) && right <= (other.right - doubtFactor)) {
-        return true
-    }
-    // Остальной код был закомментирован в оригинале — оставляем поведение как есть
-    return false
+    return right >= (other.left + doubtFactor) && right <= (other.right - doubtFactor)
 }
